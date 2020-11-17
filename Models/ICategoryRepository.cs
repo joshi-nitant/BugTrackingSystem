@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BugTrackingSystem.Models
 {
-    interface ICategoryRepository
+    public interface ICategoryRepository
     {
         Category GetCategory(int Id);
         IEnumerable<Category> GetAllCategory();

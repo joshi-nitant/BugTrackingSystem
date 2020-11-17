@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BugTrackingSystem.Models
 {
-    interface ISubCategoryRepository
+    public interface ISubCategoryRepository
     {
         SubCategory GetSubCategory(int Id);
         IEnumerable<SubCategory> GetAllSubCategory();

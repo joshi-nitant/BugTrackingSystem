@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace BugTrackingSystem.Controllers
 {
-
+  
+    [Route("Admin/Employee")]
     public class Home : Controller
     {
+        [Route("")]
+        [Route("Index")]
         public string Index()
         {
             return "Hello World";

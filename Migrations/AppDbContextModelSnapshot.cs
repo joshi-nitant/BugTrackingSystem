@@ -34,7 +34,9 @@ namespace BugTrackingSystem.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsSolved")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<DateTime>("IssueDate")
                         .HasColumnType("datetime2");
@@ -56,6 +58,30 @@ namespace BugTrackingSystem.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Bugs");
+
+                    b.HasData(
+                        new
+                        {
+                            BugId = 1,
+                            Code = "modelBuilder.Entity<User>().HasData(\r\n                            users\r\n                        ); ",
+                            Description = "What does this specify. I dont understand why this is needed",
+                            IsSolved = false,
+                            IssueDate = new DateTime(2020, 11, 18, 0, 58, 17, 149, DateTimeKind.Local).AddTicks(1814),
+                            SubCategoryId = 1,
+                            Title = "Issue with modelBuilder",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            BugId = 2,
+                            Code = "<html>\r\n                            <head> <title> Hello World</title> </head>\r\n                         </html>",
+                            Description = "Why we write this. I dont understand why this is needed",
+                            IsSolved = false,
+                            IssueDate = new DateTime(2020, 11, 18, 0, 58, 17, 150, DateTimeKind.Local).AddTicks(1371),
+                            SubCategoryId = 2,
+                            Title = "Not understanding the code",
+                            UserId = 3
+                        });
                 });
 
             modelBuilder.Entity("BugTrackingSystem.Models.BugComment", b =>
@@ -85,6 +111,24 @@ namespace BugTrackingSystem.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("BugComments");
+
+                    b.HasData(
+                        new
+                        {
+                            BugCommentId = 1,
+                            BugId = 1,
+                            Comment = "This code simply stores the seed data",
+                            CommentDate = new DateTime(2020, 11, 18, 0, 58, 17, 150, DateTimeKind.Local).AddTicks(5541),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            BugCommentId = 2,
+                            BugId = 2,
+                            Comment = "This code is a basic HTML template",
+                            CommentDate = new DateTime(2020, 11, 18, 0, 58, 17, 150, DateTimeKind.Local).AddTicks(6342),
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("BugTrackingSystem.Models.Category", b =>
@@ -101,6 +145,18 @@ namespace BugTrackingSystem.Migrations
                     b.HasKey("CatID");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CatID = 1,
+                            CatName = "Backend"
+                        },
+                        new
+                        {
+                            CatID = 2,
+                            CatName = "Frontend"
+                        });
                 });
 
             modelBuilder.Entity("BugTrackingSystem.Models.Department", b =>
@@ -117,6 +173,18 @@ namespace BugTrackingSystem.Migrations
                     b.HasKey("DepartmentId");
 
                     b.ToTable("Departments");
+
+                    b.HasData(
+                        new
+                        {
+                            DepartmentId = 1,
+                            DepartmentName = "BackendDeveloper"
+                        },
+                        new
+                        {
+                            DepartmentId = 2,
+                            DepartmentName = "FrontendDeveloper"
+                        });
                 });
 
             modelBuilder.Entity("BugTrackingSystem.Models.SubCategory", b =>
@@ -138,6 +206,20 @@ namespace BugTrackingSystem.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("SubCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            SubCatID = 1,
+                            CategoryId = 1,
+                            SubCatName = "C#"
+                        },
+                        new
+                        {
+                            SubCatID = 2,
+                            CategoryId = 2,
+                            SubCatName = "HTML"
+                        });
                 });
 
             modelBuilder.Entity("BugTrackingSystem.Models.User", b =>
@@ -155,7 +237,9 @@ namespace BugTrackingSystem.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsAdmin")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -170,6 +254,35 @@ namespace BugTrackingSystem.Migrations
                     b.HasIndex("DepartmentId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserID = 1,
+                            DepartmentId = 1,
+                            Email = "user1@gmail.com",
+                            IsAdmin = false,
+                            Password = "user1",
+                            UserName = "user1"
+                        },
+                        new
+                        {
+                            UserID = 2,
+                            DepartmentId = 1,
+                            Email = "user2@gmail.com",
+                            IsAdmin = false,
+                            Password = "user2",
+                            UserName = "user2"
+                        },
+                        new
+                        {
+                            UserID = 3,
+                            DepartmentId = 2,
+                            Email = "user3@gmail.com",
+                            IsAdmin = false,
+                            Password = "user3",
+                            UserName = "user3"
+                        });
                 });
 
             modelBuilder.Entity("BugTrackingSystem.Models.Bug", b =>

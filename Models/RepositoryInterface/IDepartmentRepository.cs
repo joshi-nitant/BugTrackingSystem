@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BugTrackingSystem.Models
 {
-    interface IDepartmentRepository
+    public interface IDepartmentRepository
     {
         Department GetDepartment(int Id);
         IEnumerable<Department> GetAllDepartment();

@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using BugTrackingSystem.Models.RepositoryClasses;
+using Westwind.AspNetCore.LiveReload;
 
 namespace BugTrackingSystem
 {
@@ -26,9 +27,14 @@ namespace BugTrackingSystem
         }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLiveReload(config =>
+            {
+                
+            });
             services.AddDbContextPool<AppDbContext>(options=> options.UseSqlServer(_config.GetConnectionString("BugTrackingSystem")));
+   
             services.AddMvc(options => options.EnableEndpointRouting = false);
-           
+          
             services.AddScoped<IUserRepository, SQLUserRepository>();
             services.AddScoped<IBugRepository, SQLBugRepository>();
             services.AddScoped<IBugCommentRepository, SQLBugCommentRepository>();
@@ -45,7 +51,7 @@ namespace BugTrackingSystem
                 app.UseDeveloperExceptionPage();
             }
 
-            
+            app.UseLiveReload();
             app.UseStaticFiles();
             app.UseMvc();
         

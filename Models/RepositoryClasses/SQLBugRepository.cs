@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,6 +36,11 @@ namespace BugTrackingSystem.Models.RepositoryClasses
         public IEnumerable<Bug> GetAllBugs()
         {
             return context.Bugs;
+        }
+
+        public IEnumerable<Bug> GetBugWithComments(int Id)
+        {
+            return context.Bugs.Where(bug=>bug.BugId==Id).Include(bug=>bug.BugComments);
         }
 
         public Bug GetBug(int Id)

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BugTrackingSystem.Models
 {
-    interface IUserRepository
+    public interface IUserRepository
     {
         User GetUser(int Id);
         IEnumerable<User> GetAllUsers();

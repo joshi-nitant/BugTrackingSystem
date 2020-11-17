@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "opL/u/VINITJelWYS5Z+yzc1NMPpRTTDZ/I7lebEjZeaukEfnS+4ch7jNT+YoyJxSlnVg3fYcBOSOOpkIXJ4Ww==",
+  "dgSpecHash": "CsFIwa3FpdMNviPU7pEldyhC5BfW45bnSjrIIm5rwd4J3B8HurNxhlLoRY6E0nCGbaXSXe1YfQjOsUCDCuaSzA==",
   "success": true,
   "projectFilePath": "D:\\Learning\\.NetCore\\BugTrackingSystem\\BugTrackingSystem.csproj",
   "expectedPackageFiles": [
@@ -100,7 +100,8 @@
     "C:\\Users\\Nitant\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\Nitant\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\Nitant\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\Nitant\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
+    "C:\\Users\\Nitant\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
+    "C:\\Users\\Nitant\\.nuget\\packages\\westwind.aspnetcore.livereload\\0.3.0\\westwind.aspnetcore.livereload.0.3.0.nupkg.sha512"
   ],
   "logs": []
 }

@@ -1,0 +1,26 @@
+﻿@model BugCommentsViewModel
+@{
+    ViewBag.Title = "Bug Details";
+}
+<p>@Model.bug.Title</p>
+<p>@Model.bug.Description</p>
+<p>@Model.bug.Code</p>
+
+@if (Model.bug.BugComments != null)
+{
+    @foreach (BugComment bugComment in Model.bug.BugComments)
+    {
+        <p>@bugComment.CommentDate</p>
+        <p>@bugComment.Comment</p>
+    }
+}
+
+<p>Post Your Comment</p>
+<form asp-controller="Bug" asp-action="Details" method="post">
+    <input hidden asp-for="@Model.bug.BugId" />
+    <label asp-for="@Model.bugComment.Comment">Comment</label>
+    <textarea asp-for="@Model.bugComment.Comment" rows="10" cols="10">
+    </textarea>
+
+    <button type="submit">Post</button>
+</form>

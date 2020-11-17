@@ -26,6 +26,7 @@ namespace BugTrackingSystem.Models
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
+            modelBuilder.Seed();
         }
     }
 }

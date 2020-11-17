@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BugTrackingSystem.Models
 {
-    interface IBugCommentRepository
+    public interface IBugCommentRepository
     {
         BugComment GetBugComment(int Id);
         IEnumerable<BugComment> GetAllBugComment();
