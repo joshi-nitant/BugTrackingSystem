@@ -19,12 +19,86 @@ namespace BugTrackingSystem.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
+            modelBuilder.Entity("BugTrackingSystem.Models.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Dept")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+                });
+
             modelBuilder.Entity("BugTrackingSystem.Models.Bug", b =>
                 {
                     b.Property<int>("BugId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -34,9 +108,7 @@ namespace BugTrackingSystem.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsSolved")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("IssueDate")
                         .HasColumnType("datetime2");
@@ -48,40 +120,13 @@ namespace BugTrackingSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("BugId");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("SubCategoryId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Bugs");
-
-                    b.HasData(
-                        new
-                        {
-                            BugId = 1,
-                            Code = "modelBuilder.Entity<User>().HasData(\r\n                            users\r\n                        ); ",
-                            Description = "What does this specify. I dont understand why this is needed",
-                            IsSolved = false,
-                            IssueDate = new DateTime(2020, 11, 18, 0, 58, 17, 149, DateTimeKind.Local).AddTicks(1814),
-                            SubCategoryId = 1,
-                            Title = "Issue with modelBuilder",
-                            UserId = 1
-                        },
-                        new
-                        {
-                            BugId = 2,
-                            Code = "<html>\r\n                            <head> <title> Hello World</title> </head>\r\n                         </html>",
-                            Description = "Why we write this. I dont understand why this is needed",
-                            IsSolved = false,
-                            IssueDate = new DateTime(2020, 11, 18, 0, 58, 17, 150, DateTimeKind.Local).AddTicks(1371),
-                            SubCategoryId = 2,
-                            Title = "Not understanding the code",
-                            UserId = 3
-                        });
                 });
 
             modelBuilder.Entity("BugTrackingSystem.Models.BugComment", b =>
@@ -90,6 +135,10 @@ namespace BugTrackingSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("BugId")
                         .HasColumnType("int");
@@ -101,34 +150,13 @@ namespace BugTrackingSystem.Migrations
                     b.Property<DateTime>("CommentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("BugCommentId");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("BugId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("BugComments");
-
-                    b.HasData(
-                        new
-                        {
-                            BugCommentId = 1,
-                            BugId = 1,
-                            Comment = "This code simply stores the seed data",
-                            CommentDate = new DateTime(2020, 11, 18, 0, 58, 17, 150, DateTimeKind.Local).AddTicks(5541),
-                            UserId = 2
-                        },
-                        new
-                        {
-                            BugCommentId = 2,
-                            BugId = 2,
-                            Comment = "This code is a basic HTML template",
-                            CommentDate = new DateTime(2020, 11, 18, 0, 58, 17, 150, DateTimeKind.Local).AddTicks(6342),
-                            UserId = 1
-                        });
                 });
 
             modelBuilder.Entity("BugTrackingSystem.Models.Category", b =>
@@ -139,7 +167,6 @@ namespace BugTrackingSystem.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("CatName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CatID");
@@ -159,34 +186,6 @@ namespace BugTrackingSystem.Migrations
                         });
                 });
 
-            modelBuilder.Entity("BugTrackingSystem.Models.Department", b =>
-                {
-                    b.Property<int>("DepartmentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("DepartmentName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("DepartmentId");
-
-                    b.ToTable("Departments");
-
-                    b.HasData(
-                        new
-                        {
-                            DepartmentId = 1,
-                            DepartmentName = "BackendDeveloper"
-                        },
-                        new
-                        {
-                            DepartmentId = 2,
-                            DepartmentName = "FrontendDeveloper"
-                        });
-                });
-
             modelBuilder.Entity("BugTrackingSystem.Models.SubCategory", b =>
                 {
                     b.Property<int>("SubCatID")
@@ -198,7 +197,6 @@ namespace BugTrackingSystem.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("SubCatName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SubCatID");
@@ -222,81 +220,147 @@ namespace BugTrackingSystem.Migrations
                         });
                 });
 
-            modelBuilder.Entity("BugTrackingSystem.Models.User", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
-                    b.Property<int>("UserID")
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
+                    b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsAdmin")
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
 
-                    b.Property<string>("Password")
-                        .IsRequired()
+                    b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
+                    b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserID");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasIndex("DepartmentId");
+                    b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.HasIndex("UserId");
 
-                    b.HasData(
-                        new
-                        {
-                            UserID = 1,
-                            DepartmentId = 1,
-                            Email = "user1@gmail.com",
-                            IsAdmin = false,
-                            Password = "user1",
-                            UserName = "user1"
-                        },
-                        new
-                        {
-                            UserID = 2,
-                            DepartmentId = 1,
-                            Email = "user2@gmail.com",
-                            IsAdmin = false,
-                            Password = "user2",
-                            UserName = "user2"
-                        },
-                        new
-                        {
-                            UserID = 3,
-                            DepartmentId = 2,
-                            Email = "user3@gmail.com",
-                            IsAdmin = false,
-                            Password = "user3",
-                            UserName = "user3"
-                        });
+                    b.ToTable("AspNetUserClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens");
                 });
 
             modelBuilder.Entity("BugTrackingSystem.Models.Bug", b =>
                 {
+                    b.HasOne("BugTrackingSystem.Models.ApplicationUser", "Owner")
+                        .WithMany("UserBugs")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("BugTrackingSystem.Models.SubCategory", "SubCat")
                         .WithMany("CategoryBugs")
                         .HasForeignKey("SubCategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("BugTrackingSystem.Models.User", "Owner")
-                        .WithMany("UserBugs")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Owner");
@@ -306,19 +370,19 @@ namespace BugTrackingSystem.Migrations
 
             modelBuilder.Entity("BugTrackingSystem.Models.BugComment", b =>
                 {
+                    b.HasOne("BugTrackingSystem.Models.ApplicationUser", "Owner")
+                        .WithMany("UserComments")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BugTrackingSystem.Models.Bug", "ParentBug")
                         .WithMany("BugComments")
                         .HasForeignKey("BugId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BugTrackingSystem.Models.User", "Employee")
-                        .WithMany("UserComments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
+                    b.Navigation("Owner");
 
                     b.Navigation("ParentBug");
                 });
@@ -328,21 +392,68 @@ namespace BugTrackingSystem.Migrations
                     b.HasOne("BugTrackingSystem.Models.Category", "Cat")
                         .WithMany("SubCategories")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Cat");
                 });
 
-            modelBuilder.Entity("BugTrackingSystem.Models.User", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("BugTrackingSystem.Models.Department", "Dept")
-                        .WithMany("DepartmentUsers")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("BugTrackingSystem.Models.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("BugTrackingSystem.Models.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Dept");
+                    b.HasOne("BugTrackingSystem.Models.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("BugTrackingSystem.Models.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BugTrackingSystem.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("UserBugs");
+
+                    b.Navigation("UserComments");
                 });
 
             modelBuilder.Entity("BugTrackingSystem.Models.Bug", b =>
@@ -355,21 +466,9 @@ namespace BugTrackingSystem.Migrations
                     b.Navigation("SubCategories");
                 });
 
-            modelBuilder.Entity("BugTrackingSystem.Models.Department", b =>
-                {
-                    b.Navigation("DepartmentUsers");
-                });
-
             modelBuilder.Entity("BugTrackingSystem.Models.SubCategory", b =>
                 {
                     b.Navigation("CategoryBugs");
-                });
-
-            modelBuilder.Entity("BugTrackingSystem.Models.User", b =>
-                {
-                    b.Navigation("UserBugs");
-
-                    b.Navigation("UserComments");
                 });
 #pragma warning restore 612, 618
         }

@@ -23,11 +23,11 @@ namespace BugTrackingSystem.Models
         public int  SubCategoryId { get; set; }
         public SubCategory SubCat { get; set; }
         
-        [Required]
-        public int UserId { get; set; }
-        public User Owner { get; set; }
+      
+        public string ApplicationUserId { get; set; }
+        public ApplicationUser Owner { get; set; }
        
-        [Required]
+      
         public DateTime IssueDate { get; set; }
        
         public bool IsSolved { get; set; }

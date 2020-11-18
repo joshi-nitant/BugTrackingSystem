@@ -12,5 +12,18 @@
             <a asp-controller="Bug" asp-action="Details" asp-route-id="@bug.BugId" class="btn btn-primary">View</a>
         </div>
     </div>
-   
+
 }
+@if (User.IsInRole("Admin"))
+{
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="Account" asp-action="Index">
+            Manage Users
+        </a>
+    </li>
+}
+<li class="nav-item">
+    <a class="nav-link" asp-controller="MyBugs" asp-action="Index">
+        Manage MyBugs
+    </a>
+</li>

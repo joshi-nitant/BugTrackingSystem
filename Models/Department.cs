@@ -6,15 +6,11 @@ using System.Threading.Tasks;
 
 namespace BugTrackingSystem.Models
 {
-    public class Department
+    public enum Department
     {
-        [Key]
-        [Required]
-        public int DepartmentId { get; set; }
-
-        [Required]
-        public string DepartmentName { get; set; }
-
-        public IList<User> DepartmentUsers { get; set; }
+        Backend,
+        HR,
+        Frontend,
+        QNA
     }
 }

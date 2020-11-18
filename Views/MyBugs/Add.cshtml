@@ -1,0 +1,79 @@
+﻿@model MyBugAddViewModel
+
+@{
+    ViewBag.Title = "Add Bug";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var items = "<option value='0'>Select</option>";
+        $('#SubCatId').html(items);
+    });
+
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#CatID').change(function () {
+            var url = '@Url.Content("~/")' + "MyBugs/GetSubCategory/";
+            var ddlsource = "#CatID";
+            url = url + $(ddlsource).val()
+            console.log(url);
+            $.getJSON(url, function (data) {
+                console.log(data);
+                var items = '';
+                $("#SubCatId").empty();
+                $.each(data, function (i, subCategories) {
+                    items += "<option value='" + subCategories.value + "'>" + subCategories.text + "</option>";
+                });
+                $('#SubCatId').html(items);
+            });
+        });
+    });
+</script>
+
+<h1>User Registration</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="bug.Title"></label>
+                <input asp-for="bug.Title" class="form-control" />
+                <span asp-validation-for="bug.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="bug.Description"></label>
+                <input asp-for="bug.Description" class="form-control" />
+                <span asp-validation-for="bug.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="bug.Code"></label>
+                <input asp-for="bug.Code" class="form-control" />
+                <span asp-validation-for="bug.Code" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="category.CatName">Category</label>
+                <div>
+                    <select id="CatID" asp-for="category.CatID" asp-items="@(new SelectList(@ViewBag.ListOfCategory,"CatID", "CatName"))">
+                    </select>
+                    <span asp-validation-for="category" class="text-danger"></span>
+                </div>
+            </div>
+            <div>
+                <label asp-for="subCategory.SubCatName">SubCategory</label>
+                <div>
+                    <select id="SubCatId" name="SubCatId" asp-for="subCategory.SubCatID" asp-items="@(new SelectList(string.Empty,"SubCatID", "SubCatName"))">
+                    </select>
+                    <span asp-validation-for="subCategory" class="text-danger"></span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+    </div>
+</div>
+
+
+

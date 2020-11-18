@@ -7,8 +7,9 @@ namespace BugTrackingSystem.Models
 {
     public interface IBugRepository
     {
-        Bug GetBug(int Id);
+        IEnumerable<Bug> GetBug(int Id);
         IEnumerable<Bug> GetAllBugs();
+        IEnumerable<Bug> GetAllBugsOfUser(string id);
         IEnumerable<Bug> GetBugWithComments(int Id);
         Bug AddBug(Bug user);
         Bug UpdateBug(Bug user);

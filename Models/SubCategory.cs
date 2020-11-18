@@ -11,10 +11,9 @@ namespace BugTrackingSystem.Models
         [Key]
         public int SubCatID { get; set; }
         
-        [Required]
         public string SubCatName { get; set; }
 
-        [Required]
+       
         public int CategoryId { get; set; }
         public Category Cat { get; set; }
        

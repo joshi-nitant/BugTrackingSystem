@@ -9,6 +9,7 @@ namespace BugTrackingSystem.Models
     {
         SubCategory GetSubCategory(int Id);
         IEnumerable<SubCategory> GetAllSubCategory();
+      
         SubCategory AddSubCategory(SubCategory user);
         SubCategory UpdateSubCategory(SubCategory user);
         SubCategory DeleteSubCategory(int id);

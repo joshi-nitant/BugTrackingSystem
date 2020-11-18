@@ -28,6 +28,8 @@ namespace BugTrackingSystem.Models.RepositoryClasses
             if (bug != null)
             {
                 context.Bugs.Remove(bug);
+                //var bugComments = context.BugComments.Where(bugComment => bugComment.BugId == bug.BugId);
+                //context.BugComments.RemoveRange(bugComments);
                 context.SaveChanges();
             }
             return bug;
@@ -43,9 +45,9 @@ namespace BugTrackingSystem.Models.RepositoryClasses
             return context.Bugs.Where(bug=>bug.BugId==Id).Include(bug=>bug.BugComments);
         }
 
-        public Bug GetBug(int Id)
+        public IEnumerable<Bug> GetBug(int Id)
         {
-            return context.Bugs.Find(Id);
+            return context.Bugs.Where(bug=>bug.BugId==Id).Include(bug => bug.SubCat).Include(bug => bug.SubCat.Cat);
         }
 
         public Bug UpdateBug(Bug bugChanges)
@@ -54,6 +56,11 @@ namespace BugTrackingSystem.Models.RepositoryClasses
             bug.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             context.SaveChanges();
             return bugChanges;
+        }
+
+        public IEnumerable<Bug> GetAllBugsOfUser(string id)
+        {
+            return context.Bugs.Where(bug => bug.ApplicationUserId == id).Include(bug=>bug.SubCat).Include(bug=>bug.SubCat.Cat);
         }
     }
 }
