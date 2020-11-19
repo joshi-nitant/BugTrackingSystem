@@ -1,0 +1,103 @@
+﻿@model SubCategoryViewModel
+
+@{
+    ViewBag.Title = "Filter";
+}
+<main id="tt-pageContent">
+    <div class="tt-custom-mobile-indent container">
+        <div class="tt-categories-title">
+            <div class="tt-title">@Model.category.CatName  </div>
+        </div>
+
+        <div class="tt-categories-list">
+            <div class="row">
+
+                @foreach (SubCategory subCategory in Model.subCategories)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="tt-item">
+                            <div class="tt-item-header">
+                                <ul class="tt-list-badge">
+                                    <li>
+                                        <a asp-controller="Bug" asp-action="Index" asp-route-id="@subCategory.SubCatID"><span class="tt-color01 tt-badge">@subCategory.SubCatName</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tt-item-layout">
+                                <div class="innerwrapper">
+                                    @subCategory.Description
+                                </div>
+                                <div class="innerwrapper">
+
+                                    <ul class="tt-list-badge">
+                                        <li>
+                                            <span class="tt-color08 tt-badge">
+                                                <form method="post" asp-action="SubCategoryDelete" asp-route-id="@subCategory.SubCatID">
+                                                    <input asp-for="category.CatID" hidden />
+                                                    <button type="submit" class="fa fa-trash" style="color:red;font-size: 20px; border:none;" aria-hidden="true"
+                                                            onclick="return confirm('Are you sure you want to delete this subcategory?')">
+                                                    </button>
+                                                </form>
+
+                                            </span>
+
+
+                                        </li>
+
+                                    </ul>
+                         
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+        <div class="tt-wrapper-inner">
+            <form class="form-default form-create-topic" method="post" asp-controller="Category" asp-action="SubCategory">
+                <input asp-for="subCategory.SubCatID" hidden />
+                <input asp-for="category.CatID" hidden />
+                <div class="form-group">
+                    <label asp-for="subCategory.SubCatName">SubCategory</label>
+                    <div class="tt-value-wrapper">
+                        <input asp-for="subCategory.SubCatName "
+                               class="form-control"
+                               id="inputTopicTitle"
+                               placeholder="SubCategory Name" />
+                        <span class="tt-value-input">99</span>
+                    </div>
+                    <div class="tt-note">
+                        SubCategory within the category which specifies either a new language or a sub-technology.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="subCategory.Description ">Description</label>
+                    <div class="tt-value-wrapper">
+                        <input asp-for="subCategory.Description "
+                               class="form-control"
+                               id="inputTopicTitle"
+                               placeholder="SubCategory Name" />
+                        <span class="tt-value-input">99</span>
+                    </div>
+                    <div class="tt-note">
+                        Short one or two line description of the subcategory.
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 center-block">
+                        @if (Model.subCategory == null)
+                        {
+                            <input type="submit" value="Add" class="btn btn-secondary btn-width-lg center-block" />
+                        }
+                        else
+                        {
+                            <input type="submit" value="Update" class="btn btn-secondary btn-width-lg center-block" />
+                        }
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>

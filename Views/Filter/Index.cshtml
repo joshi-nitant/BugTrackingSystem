@@ -1,0 +1,47 @@
+﻿@model IEnumerable<SubCategory>
+
+@{
+    ViewBag.Title = "Filter";
+}
+<main id="tt-pageContent">
+    <div class="tt-custom-mobile-indent container">
+        <div class="tt-categories-title">
+            <div class="tt-title">Categories</div>
+        </div>
+
+        <div class="tt-categories-list">
+            <div class="row">
+
+                @foreach (SubCategory subCategory in Model)
+                {
+                <div class="col-md-6 col-lg-4">
+                    <div class="tt-item">
+                        <div class="tt-item-header">
+                            <ul class="tt-list-badge">
+                                <li>
+                                    <a asp-controller="Bug" asp-action="Index" asp-route-id="@subCategory.SubCatID"><span class="tt-color01 tt-badge">@subCategory.SubCatName</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tt-item-layout">
+                            <div class="innerwrapper">
+                               @subCategory.Description
+                            </div>
+                            <div class="innerwrapper">
+                                <h6 class="tt-title">Category</h6>
+                                <ul class="tt-list-badge">
+                                    <li>
+                                        <a href="#"><span class="tt-badge">@subCategory.Cat.CatName</span></a>
+                                    </li>
+                                 
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,10 +36,15 @@ namespace BugTrackingSystem.Models.RepositoryClasses
 
         public IEnumerable<SubCategory> GetAllSubCategory()
         {
-            return context.SubCategories;
+            return context.SubCategories.Include(subCategory=>subCategory.Cat);
         }
 
-        public SubCategory GetSubCategory(int Id)
+        public IEnumerable<SubCategory> GetAllSubCategoryOfCategory(int id)
+        {
+            return context.SubCategories.Where(subCategory=> subCategory.CategoryId==id).Include(subCategory => subCategory.Cat);
+        }
+
+        public SubCategory GetSubCategory(int? Id)
         {
             return context.SubCategories.Find(Id);
         }

@@ -7,7 +7,8 @@ namespace BugTrackingSystem.Models
 {
     public interface IBugCommentRepository
     {
-        BugComment GetBugComment(int Id);
+        IEnumerable<BugComment> GetBugComment(int Id);
+       
         IEnumerable<BugComment> GetAllBugComment();
         BugComment AddBugComment(BugComment user);
         BugComment UpdateBugComment(BugComment user);

@@ -2,25 +2,258 @@
 @{
     ViewBag.Title = "Bug Details";
 }
-<p>@Model.bug.Title</p>
-<p>@Model.bug.Description</p>
-<p>@Model.bug.Code</p>
+<main id="tt-pageContent">
+    <div class="container">
+        <div class="tt-single-topic-list">
+            <div class="tt-item">
+                <div class="tt-single-topic">
+                    <div class="tt-item-header">
+                        <div class="tt-item-info info-top">
+                            <div class="tt-avatar-icon">
+                                <i class="tt-icon">
+                                    <svg>
+                                    <use xlink:href="#icon-ava-d"></use></svg>
+                                </i>
+                            </div>
+                            <div class="tt-avatar-title">
+                                <a href="#">@Model.bug.Owner.Name </a>
+                            </div>
+                            <a href="#" class="tt-info-time">
+                                <i class="tt-icon"><svg><use xlink:href="#icon-time"></use></svg></i>@Model.bug.IssueDate.ToString("d MMM,yyyy")
+                            </a>
+                        </div>
+                        <h3 class="tt-item-title">
+                            <a href="#">@Model.bug.Title</a>
+                        </h3>
+                        <div class="tt-item-tag">
+                            <ul class="tt-list-badge">
+                                <li>
+                                    <a href="#"><span class="tt-color03 tt-badge">@Model.bug.SubCat.SubCatName</span></a>
+                                </li>
+                                <li>
+                                    <a href="#"><span class="tt-badge">@Model.bug.SubCat.Cat.CatName</span></a>
+                                </li>
+                              
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tt-item-description">
+                        
+                        <p>
+                           @Model.bug.Description
+                        </p>
+                       
+                  
+                    </div>
+                    <div class="tt-item-info info-bottom">
+                        <a href="#" class="tt-icon-btn">
+                            <i class="tt-icon">
+                                <svg>
+                                <use xlink:href="#icon-like"></use></svg>
+                            </i>
+                            <span class="tt-text">671</span>
+                        </a>
+                        <a href="#" class="tt-icon-btn">
+                            <i class="tt-icon">
+                                <svg>
+                                <use xlink:href="#icon-dislike"></use></svg>
+                            </i>
+                            <span class="tt-text">39</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
 
-@if (Model.bug.BugComments != null)
-{
-    @foreach (BugComment bugComment in Model.bug.BugComments)
+            <div class="tt-item">
+                @foreach (BugComment bugComment in Model.bugComments)
+                {
+
+                <div class="tt-single-topic">
+                    <div class="tt-item-header pt-noborder">
+                        <div class="tt-item-info info-top">
+                            <div class="tt-avatar-icon">
+                                <i class="tt-icon">
+                                    <svg>
+                                    <use xlink:href="#icon-ava-t"></use></svg>
+                                </i>
+                            </div>
+                            <div class="tt-avatar-title">
+                                <a href="#">@bugComment.Owner.Name</a>
+                            </div>
+                            <a href="#" class="tt-info-time">
+                                <i class="tt-icon"><svg><use xlink:href="#icon-time"></use></svg></i>@bugComment.CommentDate.ToString("d MMM,yyyy")
+                            </a>
+                        </div>
+                    </div>
+                    <div class="tt-item-description">
+                      @bugComment.Comment
+                    </div>
+                    <div class="tt-item-info info-bottom">
+                        <a href="#" class="tt-icon-btn">
+                            <i class="tt-icon">
+                                <svg>
+                                <use xlink:href="#icon-like"></use></svg>
+                            </i>
+                            <span class="tt-text">671</span>
+                        </a>
+                        <a href="#" class="tt-icon-btn">
+                            <i class="tt-icon">
+                                <svg>
+                                <use xlink:href="#icon-dislike"></use></svg>
+                            </i>
+                            <span class="tt-text">39</span>
+                        </a>
+                    </div>
+                </div>
+                }
+            </div>
+
+            <div class="tt-wrapper-inner">
+                <h4 class="tt-title-separator">
+                    <span>You’ve reached the end of replies</span>
+                </h4>
+            </div>
+        </div>
+        <div class="tt-wrapper-inner">
+            <div class="pt-editor form-default">
+                <h6 class="pt-title">Post Your Reply</h6>
+                <div class="pt-row">
+                    <div class="col-left">
+                        <ul class="pt-edit-btn">
+                            <li>
+                                <button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                        <use xlink:href="#icon-quote"></use>
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                        <use xlink:href="#icon-bold"></use>
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                        <use xlink:href="#icon-italic"></use>
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                        <use xlink:href="#icon-share_topic"></use>
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                        <use xlink:href="#icon-blockquote"></use>
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                        <use xlink:href="#icon-performatted"></use>
+                                    </svg>
+                                </button>
+                            </li>
+                            <li class="hr"></li>
+                            <li>
+                                <button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                        <use xlink:href="#icon-upload_files"></use>
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                        <use xlink:href="#icon-bullet_list"></use>
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                        <use xlink:href="#icon-heading"></use>
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                        <use xlink:href="#icon-horizontal_line"></use>
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                        <use xlink:href="#icon-emoticon"></use>
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                        <use xlink:href="#icon-settings"></use>
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="btn-icon">
+                                    <svg class="tt-icon">
+                                        <use xlink:href="#icon-color_picker"></use>
+                                    </svg>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <form asp-controller="Bug" asp-action="Details" method="post">
+                    <input hidden asp-for="@Model.bug.BugId" />
+                    <label asp-for="@Model.bugComment.Comment"></label>
+                    <div class="form-group">
+                        <textarea asp-for="@Model.bugComment.Comment"
+                                  class="form-control"
+                                  rows="5"
+                                  placeholder="Lets get started"></textarea>
+                    </div>
+                    <div class="pt-row">
+                        <div class="col-auto">
+                            <input type="submit" value="Comment" class="btn btn-secondary btn-width-lg"/>
+                        </div>
+                    </div>
+                </form>
+                 
+            </div>
+        </div>
+    </div>
+</main>
+@*<p>@Model.bug.Title</p>
+    <p>@Model.bug.Description</p>
+    <p>@Model.bug.Code</p>
+
+    @if (Model.bug.BugComments != null)
     {
-        <p>@bugComment.CommentDate</p>
-        <p>@bugComment.Comment</p>
+        @foreach (BugComment bugComment in Model.bug.BugComments)
+        {
+            <p>@bugComment.CommentDate</p>
+            <p>@bugComment.Comment</p>
+        }
     }
-}
 
-<p>Post Your Comment</p>
-<form asp-controller="Bug" asp-action="Details" method="post">
-    <input hidden asp-for="@Model.bug.BugId" />
-    <label asp-for="@Model.bugComment.Comment">Comment</label>
-    <textarea asp-for="@Model.bugComment.Comment" rows="10" cols="10">
-    </textarea>
+    <p>Post Your Comment</p>
+    <form asp-controller="Bug" asp-action="Details" method="post">
+        <input hidden asp-for="@Model.bug.BugId" />
+        <label asp-for="@Model.bugComment.Comment">Comment</label>
+        <textarea asp-for="@Model.bugComment.Comment" rows="10" cols="10">
+        </textarea>
 
-    <button type="submit">Post</button>
-</form>
+        <button type="submit">Post</button>
+    </form>*@

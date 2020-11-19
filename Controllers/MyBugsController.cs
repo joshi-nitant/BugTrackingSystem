@@ -27,18 +27,13 @@ namespace BugTrackingSystem.Controllers
         }
 
         [HttpGet]
+        [Route("Index")]
+        [Route("")]
         public IActionResult Index()
         {
+            MyBugAddViewModel myBugAddViewModel = new MyBugAddViewModel();
             var id = userManager.GetUserId(User);
             IEnumerable<Bug> bugs = BugRepository.GetAllBugsOfUser(id);
-            return View(bugs);
-        }
-
-        [HttpGet]
-        [Route("Add")]
-        public IActionResult Add()
-        {
- 
             List<Category> categories = CategoryRepository.GetAllCategory().ToList();
             categories = (from category in categories select category).ToList();
             categories.Insert(0, new Category
@@ -47,13 +42,15 @@ namespace BugTrackingSystem.Controllers
                 CatName = "Select Category",
             });
             ViewBag.ListOfCategory = categories;
-
-            return View();
+            myBugAddViewModel.bugs = bugs;
+          
+            return View(myBugAddViewModel);
         }
 
         [HttpPost]
-        [Route("Add")]
-        public IActionResult Add(MyBugAddViewModel myBugAddViewModel)
+        [Route("Index")]
+        [Route("")]
+        public IActionResult Index(MyBugAddViewModel myBugAddViewModel)
         {
 
             if (ModelState.IsValid)
@@ -64,20 +61,23 @@ namespace BugTrackingSystem.Controllers
                     return View(myBugAddViewModel);
                 }
                 var SubCategoryID = HttpContext.Request.Form["SubCatId"].ToString();
-                if(SubCategoryID == "0")
+                if (SubCategoryID == "0")
                 {
                     ModelState.AddModelError("", "Select SubCategory");
                     return View(myBugAddViewModel);
                 }
 
                 Bug bug = myBugAddViewModel.bug;
-                bug.SubCategoryId =  Int32.Parse(SubCategoryID);
+                bug.SubCategoryId = Int32.Parse(SubCategoryID);
                 bug.ApplicationUserId = userManager.GetUserId(User);
                 bug.IssueDate = DateTime.Now;
-                
+
                 BugRepository.AddBug(bug);
                 return RedirectToAction("Index");
             }
+            var id = userManager.GetUserId(User);
+            IEnumerable<Bug> bugs = BugRepository.GetAllBugsOfUser(id);
+            myBugAddViewModel.bugs = bugs;
             List<Category> categories = CategoryRepository.GetAllCategory().ToList();
             categories = (from category in categories select category).ToList();
             categories.Insert(0, new Category
@@ -90,12 +90,68 @@ namespace BugTrackingSystem.Controllers
 
         }
 
+        //[HttpGet]
+        //[Route("Add")]
+        //public IActionResult Add()
+        //{
+
+        //    List<Category> categories = CategoryRepository.GetAllCategory().ToList();
+        //    categories = (from category in categories select category).ToList();
+        //    categories.Insert(0, new Category
+        //    {
+        //        CatID = 0,
+        //        CatName = "Select Category",
+        //    });
+        //    ViewBag.ListOfCategory = categories;
+
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //[Route("Add")]
+        //public IActionResult Add(MyBugAddViewModel myBugAddViewModel)
+        //{
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (myBugAddViewModel.category.CatID == 0)
+        //        {
+        //            ModelState.AddModelError("", "Select Category");
+        //            return View(myBugAddViewModel);
+        //        }
+        //        var SubCategoryID = HttpContext.Request.Form["SubCatId"].ToString();
+        //        if(SubCategoryID == "0")
+        //        {
+        //            ModelState.AddModelError("", "Select SubCategory");
+        //            return View(myBugAddViewModel);
+        //        }
+
+        //        Bug bug = myBugAddViewModel.bug;
+        //        bug.SubCategoryId =  Int32.Parse(SubCategoryID);
+        //        bug.ApplicationUserId = userManager.GetUserId(User);
+        //        bug.IssueDate = DateTime.Now;
+
+        //        BugRepository.AddBug(bug);
+        //        return RedirectToAction("Index");
+        //    }
+        //    List<Category> categories = CategoryRepository.GetAllCategory().ToList();
+        //    categories = (from category in categories select category).ToList();
+        //    categories.Insert(0, new Category
+        //    {
+        //        CatID = 0,
+        //        CatName = "Select Category",
+        //    });
+        //    ViewBag.ListOfCategory = categories;
+        //    return View(myBugAddViewModel);
+
+        //}
+
         [HttpGet]
         [Route("EditBug/{BugId}")]
         public IActionResult EditBug(int BugId)
         {
             MyBugEditViewModel myBugEditViewModel = new MyBugEditViewModel();
-            
+
             IEnumerable<Bug> bugs = BugRepository.GetBug(BugId);
             var bug = bugs.First();
             myBugEditViewModel.bug = bug;
@@ -110,6 +166,9 @@ namespace BugTrackingSystem.Controllers
             ViewBag.ListOfSubCategory = subCategories;
             myBugEditViewModel.subCategory = bug.SubCat;
             
+            var id = userManager.GetUserId(User);
+            IEnumerable<Bug> bugsList = BugRepository.GetAllBugsOfUser(id);
+            myBugEditViewModel.bugs = bugsList;
             return View(myBugEditViewModel);
         }
 
@@ -145,6 +204,10 @@ namespace BugTrackingSystem.Controllers
             subCategories = (from subCategory in subCategories where subCategory.CategoryId==bug.SubCat.Cat.CatID select subCategory).ToList();
             ViewBag.ListOfSubCategory = subCategories;
             myBugEditViewModel.subCategory = bug.SubCat;
+
+            var id = userManager.GetUserId(User);
+            IEnumerable<Bug> bugsList = BugRepository.GetAllBugsOfUser(id);
+            myBugEditViewModel.bugs = bugsList;
             return View(myBugEditViewModel);
         }
 

@@ -17,6 +17,7 @@ namespace BugTrackingSystem.Models
         public int CategoryId { get; set; }
         public Category Cat { get; set; }
        
+        public string Description { get; set; }
         public IList<Bug> CategoryBugs { get; set; }
      }
 }

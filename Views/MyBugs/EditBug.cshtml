@@ -1,8 +1,9 @@
 ﻿@model MyBugEditViewModel
 
 @{
-    ViewBag.Title = "Add Bug";
+    ViewBag.Title = "All Bugs";
 }
+
 
 
 
@@ -25,63 +26,333 @@
         });
     });
 </script>
-
-<h1>Edit Bug</h1>
-
-<div class="row">
-    <div class="col-md-12">
-        <form method="post">
-            <input hidden asp-for="bug.BugId" />
-            <input hidden asp-for="bug.ApplicationUserId" />
-            <input hidden asp-for="bug.BugComments" />
-            <input hidden asp-for="bug.IssueDate" />
-
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="bug.Title"></label>
-                <input asp-for="bug.Title" class="form-control" />
-                <span asp-validation-for="bug.Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="bug.Description"></label>
-                <input asp-for="bug.Description" class="form-control" />
-                <span asp-validation-for="bug.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="bug.Code"></label>
-                <input asp-for="bug.Code" class="form-control" />
-                <span asp-validation-for="bug.Code" class="text-danger"></span>
-            </div>
-
-            <div>
-                <label asp-for="category.CatName">Category</label>
-                <div>
-                    <select id="CatID" asp-for="category.CatID" asp-items="@(new SelectList(@ViewBag.ListOfCategory,"CatID", "CatName"))">
-                    </select>
-                    <span asp-validation-for="category" class="text-danger"></span>
+<main id="tt-pageContent">
+    
+    <div class="container">
+        <div class="tt-wrapper-inner">
+            <h1 class="tt-title-border">Create New Topic</h1>
+            <div asp-validation-summary="All" class="text-danger" style="color:red;"></div>
+            <form class="form-default form-create-topic" method="post" asp-controller="MyBugs" asp-action="EditBug">
+                <input hidden asp-for="bug.BugId" />
+                <input hidden asp-for="bug.ApplicationUserId" />
+                <input hidden asp-for="bug.BugComments" />
+                <input hidden asp-for="bug.IssueDate" />
+                <div class="form-group">
+                    <label for="bug.Title">Topic Title</label>
+                    <div class="tt-value-wrapper">
+                        <input asp-for="bug.Title"
+                               class="form-control"
+                               id="inputTopicTitle"
+                               placeholder="Subject of your topic" />
+                        <span class="tt-value-input">99</span>
+                    </div>
+                    <div class="tt-note">
+                        Describe your topic title, while keeping the subject as short as
+                        possible.
+                    </div>
                 </div>
-            </div>
-            <div>
-                <label asp-for="subCategory.SubCatName">SubCategory</label>
-                <div>
-                    <select id="SubCatId" name="SubCatId" asp-for="subCategory.SubCatID" asp-items="@(new SelectList(ViewBag.ListOfSubCategory,"SubCatID", "SubCatName"))">
-                    </select>
-                    <span asp-validation-for="subCategory" class="text-danger"></span>
+                <div class="form-group">
+                    <label for="bug.Description">Short Description</label>
+                    <div class="tt-value-wrapper">
+                        <textarea asp-for="bug.Description"
+                                  class="form-control"
+                                  id="inputTopicTitle"
+                                  placeholder="Short Description of your topic">
+                </textarea>
+                        <span class="tt-value-input">99</span>
+                    </div>
+                    <div class="tt-note">
+                        Describe your topic and the associated code.
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label asp-for="bug.IsSolved">
-                        <input asp-for="bug.IsSolved" />
-                       IsSolved
-                    </label>
+
+                <div class="pt-editor">
+                    <h6 class="pt-title">Topic Body</h6>
+                    <div class="pt-row">
+                        <div class="col-left">
+                            <ul class="pt-edit-btn">
+                                <li>
+                                    <button type="button" class="btn-icon">
+                                        <svg class="tt-icon">
+                                            <use xlink:href="#icon-quote"></use>
+                                        </svg>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" class="btn-icon">
+                                        <svg class="tt-icon">
+                                            <use xlink:href="#icon-bold"></use>
+                                        </svg>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" class="btn-icon">
+                                        <svg class="tt-icon">
+                                            <use xlink:href="#icon-italic"></use>
+                                        </svg>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" class="btn-icon">
+                                        <svg class="tt-icon">
+                                            <use xlink:href="#icon-share_topic"></use>
+                                        </svg>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" class="btn-icon">
+                                        <svg class="tt-icon">
+                                            <use xlink:href="#icon-blockquote"></use>
+                                        </svg>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" class="btn-icon">
+                                        <svg class="tt-icon">
+                                            <use xlink:href="#icon-performatted"></use>
+                                        </svg>
+                                    </button>
+                                </li>
+                                <li class="hr"></li>
+                                <li>
+                                    <button type="button" class="btn-icon">
+                                        <svg class="tt-icon">
+                                            <use xlink:href="#icon-upload_files"></use>
+                                        </svg>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" class="btn-icon">
+                                        <svg class="tt-icon">
+                                            <use xlink:href="#icon-bullet_list"></use>
+                                        </svg>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" class="btn-icon">
+                                        <svg class="tt-icon">
+                                            <use xlink:href="#icon-heading"></use>
+                                        </svg>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" class="btn-icon">
+                                        <svg class="tt-icon">
+                                            <use xlink:href="#icon-horizontal_line"></use>
+                                        </svg>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" class="btn-icon">
+                                        <svg class="tt-icon">
+                                            <use xlink:href="#icon-emoticon"></use>
+                                        </svg>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" class="btn-icon">
+                                        <svg class="tt-icon">
+                                            <use xlink:href="#icon-settings"></use>
+                                        </svg>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" class="btn-icon">
+                                        <svg class="tt-icon">
+                                            <use xlink:href="#icon-color_picker"></use>
+                                        </svg>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea asp-for="bug.Code"
+                                  class="form-control"
+                                  rows="5"
+                                  placeholder="Lets get started"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="category.CatName">Category</label>
+                                <select id="CatID" asp-for="category.CatID" asp-items="@(new SelectList(@ViewBag.ListOfCategory,"CatID", "CatName"))">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="subCategory.SubCatName">Sub Category</label>
+                                <select id="SubCatId" name="SubCatId" asp-for="subCategory.SubCatID" asp-items="@(new SelectList(@ViewBag.ListOfSubCategory,"SubCatID", "SubCatName"))">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label asp-for="bug.IsSolved">
+                                <input type="checkbox" asp-for="bug.IsSolved" />
+                                IsSolved
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto ml-md-auto">
+                            <input type="submit" value="Update Bug" class="btn btn-secondary btn-width-lg" />
+                        </div>
+                    </div>
                 </div>
+            </form>
+        </div>
+        <div class="tt-topic-list tt-offset-top-30">
+            <div class="tt-list-search">
+                <div class="tt-title">Your Previous Bugs</div>
             </div>
-            <button type="submit" class="btn btn-primary">Update</button>
-            <a asp-action="Index" class="btn btn-primary">Cancel</a>
-        </form>
+            <div class="tt-list-header tt-border-bottom">
+                <div class="tt-col-topic">Topic</div>
+                <div class="tt-col-category">Category</div>
+                <div class="tt-col-value hide-mobile">Solved</div>
+                <div class="tt-col-value hide-mobile">Edit</div>
+                <div class="tt-col-value hide-mobile">Delete</div>
+            </div>
+
+
+            @foreach (Bug currentBug in Model.bugs)
+            {
+
+
+                <div class="tt-item">
+                    <div class="tt-col-avatar">
+                        <svg class="tt-icon">
+                            <use xlink:href="#icon-ava-n"></use>
+                        </svg>
+                    </div>
+                    <div class="tt-col-description">
+                        <h6 class="tt-title">
+                            <a href="#">
+                                @currentBug.Title
+                            </a>
+                        </h6>
+                        <div class="row align-items-center no-gutters hide-desktope">
+                            <div class="col-auto">
+                                <ul class="tt-list-badge">
+                                    <li class="show-mobile">
+                                        <a href="#"><span class="tt-color05 tt-badge">bug.SubCat.SubCatName</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-auto ml-auto show-mobile">
+                                <div class="tt-value">1d</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tt-col-category">
+                        <span class="tt-color05 tt-badge">@currentBug.SubCat.Cat.CatName</span>
+                    </div>
+                    <div class="tt-col-value tt-color-select hide-mobile">
+                        <span class="tt-color08 tt-badge">@currentBug.IsSolved</span>
+                    </div>
+                    <div class="tt-col-value tt-color-select hide-mobile">
+                        <a class="fa fa-pencil-square-o" aria-hidden="true" style="color:dodgerblue;font-size: 20px;" asp-action="EditBug" asp-controller="MyBugs"
+                           asp-route-BugId="@currentBug.BugId"></a>
+                    </div>
+                    <div class="tt-col-value tt-color-select hide-mobile">
+                        <form method="post" asp-action="DeleteBug" asp-controller="MyBugs" asp-route-BugId="@currentBug.BugId">
+                            <button type="submit" class="fa fa-trash" style="color:red;font-size: 20px;" aria-hidden="true"
+                                    onclick="return confirm('Are you sure you want to delete this bug?')">
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            }
+
+        </div>
     </div>
-</div>
+</main>
+@*@model MyBugEditViewModel
+
+    @{
+        ViewBag.Title = "Add Bug";
+    }
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#CatID').change(function () {
+                var url = '@Url.Content("~/")' + "MyBugs/GetSubCategory/";
+                var ddlsource = "#CatID";
+                url = url + $(ddlsource).val()
+                console.log(url);
+                $.getJSON(url, function (data) {
+                    console.log(data);
+                    var items = '';
+                    $("#SubCatId").empty();
+                    $.each(data, function (i, subCategories) {
+                        items += "<option value='" + subCategories.value + "'>" + subCategories.text + "</option>";
+                    });
+                    $('#SubCatId').html(items);
+                });
+            });
+        });
+    </script>
+
+    <h1>Edit Bug</h1>
+
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post">
+                <input hidden asp-for="bug.BugId" />
+                <input hidden asp-for="bug.ApplicationUserId" />
+                <input hidden asp-for="bug.BugComments" />
+                <input hidden asp-for="bug.IssueDate" />
+
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="bug.Title"></label>
+                    <input asp-for="bug.Title" class="form-control" />
+                    <span asp-validation-for="bug.Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="bug.Description"></label>
+                    <input asp-for="bug.Description" class="form-control" />
+                    <span asp-validation-for="bug.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="bug.Code"></label>
+                    <input asp-for="bug.Code" class="form-control" />
+                    <span asp-validation-for="bug.Code" class="text-danger"></span>
+                </div>
+
+                <div>
+                    <label asp-for="category.CatName">Category</label>
+                    <div>
+                        <select id="CatID" asp-for="category.CatID" asp-items="@(new SelectList(@ViewBag.ListOfCategory,"CatID", "CatName"))">
+                        </select>
+                        <span asp-validation-for="category" class="text-danger"></span>
+                    </div>
+                </div>
+                <div>
+                    <label asp-for="subCategory.SubCatName">SubCategory</label>
+                    <div>
+                        <select id="SubCatId" name="SubCatId" asp-for="subCategory.SubCatID" asp-items="@(new SelectList(ViewBag.ListOfSubCategory,"SubCatID", "SubCatName"))">
+                        </select>
+                        <span asp-validation-for="subCategory" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="bug.IsSolved">
+                            <input asp-for="bug.IsSolved" />
+                           IsSolved
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a asp-action="Index" class="btn btn-primary">Cancel</a>
+            </form>
+        </div>
+    </div>*@
 
 
 

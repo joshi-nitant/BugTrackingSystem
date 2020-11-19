@@ -28,8 +28,8 @@ namespace BugTrackingSystem.Models.RepositoryClasses
             if (bug != null)
             {
                 context.Bugs.Remove(bug);
-                //var bugComments = context.BugComments.Where(bugComment => bugComment.BugId == bug.BugId);
-                //context.BugComments.RemoveRange(bugComments);
+                var bugComments = context.BugComments.Where(bugComment => bugComment.BugId == bug.BugId);
+                context.BugComments.RemoveRange(bugComments);
                 context.SaveChanges();
             }
             return bug;
@@ -37,12 +37,12 @@ namespace BugTrackingSystem.Models.RepositoryClasses
 
         public IEnumerable<Bug> GetAllBugs()
         {
-            return context.Bugs;
+            return context.Bugs.Include(bug=>bug.SubCat).Include(bug=>bug.SubCat.Cat);
         }
 
         public IEnumerable<Bug> GetBugWithComments(int Id)
         {
-            return context.Bugs.Where(bug=>bug.BugId==Id).Include(bug=>bug.BugComments);
+            return context.Bugs.Where(bug=>bug.BugId==Id).Include(bug=>bug.BugComments).Include(bug=>bug.Owner).Include(bug=>bug.SubCat).Include(bug=>bug.SubCat.Cat);
         }
 
         public IEnumerable<Bug> GetBug(int Id)
@@ -61,6 +61,11 @@ namespace BugTrackingSystem.Models.RepositoryClasses
         public IEnumerable<Bug> GetAllBugsOfUser(string id)
         {
             return context.Bugs.Where(bug => bug.ApplicationUserId == id).Include(bug=>bug.SubCat).Include(bug=>bug.SubCat.Cat);
+        }
+
+        public IEnumerable<Bug> GetAllBugsWithCategory(int id)
+        {
+            return context.Bugs.Where(bug=>bug.SubCategoryId==id).Include(bug => bug.SubCat).Include(bug => bug.SubCat.Cat);
         }
     }
 }

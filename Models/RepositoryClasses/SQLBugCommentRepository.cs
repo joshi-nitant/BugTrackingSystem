@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,10 +38,12 @@ namespace BugTrackingSystem.Models.RepositoryClasses
             return context.BugComments;
         }
 
-        public BugComment GetBugComment(int Id)
+        public IEnumerable<BugComment> GetBugComment(int Id)
         {
-            return context.BugComments.Find(Id);
+            return context.BugComments.Where(bugComment => bugComment.BugCommentId == Id).Include(bugComment => bugComment.Owner);
         }
+
+      
 
         public BugComment UpdateBugComment(BugComment bugComment)
         {
@@ -49,5 +52,6 @@ namespace BugTrackingSystem.Models.RepositoryClasses
             context.SaveChanges();
             return bugComment;
         }
+
     }
 }

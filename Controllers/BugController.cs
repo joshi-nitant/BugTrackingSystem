@@ -30,16 +30,26 @@ namespace BugTrackingSystem.Controllers
         }
 
         [Route("")]
-        [Route("Index")]
+        [Route("Index/{id?}")]
         [HttpGet]
-        public ViewResult Index()
+        public ViewResult Index(int? id)
         {
             //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             //var user = await userManager.FindByIdAsync(userId);
 
             //await userManager.AddToRoleAsync(user, "Employee");
-            IEnumerable<Bug> bugs = _bugRepository.GetAllBugs();
-            return View(bugs);
+            int subCatId = id ?? 0;
+            if (subCatId != 0)
+            {
+                IEnumerable<Bug> bugs = _bugRepository.GetAllBugsWithCategory(subCatId);
+                return View(bugs);
+            }
+            else
+            {
+                IEnumerable<Bug> bugs = _bugRepository.GetAllBugs();
+                return View(bugs);
+            }
+         
         }
 
         [HttpGet]
@@ -49,6 +59,16 @@ namespace BugTrackingSystem.Controllers
             BugCommentsViewModel bugCommentsViewModel = new BugCommentsViewModel();
             IEnumerable<Bug> bugs = _bugRepository.GetBugWithComments(id);
             bugCommentsViewModel.bug = bugs.ToList()[0];
+
+            IEnumerable<BugComment> bugComments = bugs.ToList()[0].BugComments;
+
+            List<BugComment> bugCommentsWithUser = new List<BugComment>();
+
+            foreach(var bugComment in bugComments)
+            {
+                bugCommentsWithUser.Add(_bugCommentRepository.GetBugComment(bugComment.BugCommentId).ToList()[0]);
+            }
+            bugCommentsViewModel.bugComments = bugCommentsWithUser;
             return View(bugCommentsViewModel);
         }
 
@@ -70,7 +90,33 @@ namespace BugTrackingSystem.Controllers
           
             return RedirectToAction();
         }
-      
+
+        [HttpPost]
+        [Route("Search")]
+        public ViewResult Search(string search)
+        {
+            
+            IEnumerable<Bug> bugs = _bugRepository.GetAllBugs();
+            List<Bug> searchedBugs = new List<Bug>();
+
+            if (search == null || search == "")
+            {
+                return View(bugs);
+            }
+            search = search.ToLower();
+            foreach(Bug bug in bugs)
+            {
+                string bugTitle = bug.Title.ToLower();
+                string bugDescription = bug.Description.ToLower();
+
+                if(bugTitle.Contains(search) || bugDescription.Contains(search))
+                {
+                    searchedBugs.Add(bug);
+                }
+            }
+            return View("Index",searchedBugs);
+        }
+
 
     }
 }

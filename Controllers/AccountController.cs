@@ -26,7 +26,7 @@ namespace BugTrackingSystem.Controllers
         }
 
         [HttpGet]
-        [Route("Account")]
+  
         [Route("Register")]
         [Authorize(Roles = "Admin")]
         public IActionResult Register()

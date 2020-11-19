@@ -7,7 +7,7 @@ namespace BugTrackingSystem.Models
 {
     public interface ICategoryRepository
     {
-        Category GetCategory(int Id);
+        Category GetCategory(int? Id);
         IEnumerable<Category> GetAllCategory();
         IEnumerable<Category> GetAllCategoryWithSubCategories();
         Category AddCategory(Category user);

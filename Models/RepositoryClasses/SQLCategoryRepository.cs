@@ -44,7 +44,7 @@ namespace BugTrackingSystem.Models.RepositoryClasses
             return context.Categories.Include(category=> category.SubCategories);
         }
 
-        public Category GetCategory(int Id)
+        public Category GetCategory(int? Id)
         {
             return context.Categories.Find(Id);
         }

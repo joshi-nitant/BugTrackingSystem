@@ -2,28 +2,84 @@
 @{
     ViewBag.Title = "Bugs";
 }
+<main id="tt-pageContent" class="tt-offset-small">
+    <div class="container">
+        <div class="tt-topic-list">
+            <div class="tt-list-header">
+                <div class="tt-col-topic">Topic</div>
+                <div class="tt-col-category">Category</div>
+            </div>
+            @foreach (var bug in Model)
+            {
 
-@foreach (var bug in Model)
-{
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">@bug.Title</h5>
-            <p class="card-text">@bug.Description</p>
-            <a asp-controller="Bug" asp-action="Details" asp-route-id="@bug.BugId" class="btn btn-primary">View</a>
+
+
+
+                <div class="tt-item tt-itemselect">
+                    <div class="tt-col-avatar">
+                        <svg class="tt-icon">
+                            <use xlink:href="#icon-ava-d"></use>
+                        </svg>
+                    </div>
+                    <div class="tt-col-description">
+                        <h6 class="tt-title">
+                            @if (bug.IsSolved)
+                            {
+                            <svg class="tt-icon">
+                                <use xlink:href="#icon-verified"></use>
+                            </svg>
+                            }
+                            <a asp-controller="Bug" asp-action="Details" asp-route-id="@bug.BugId">
+                                @bug.Title
+                            </a>
+                        </h6>
+                        <div class="row align-items-center no-gutters">
+                            <div class="col-11">
+                                <ul class="tt-list-badge">
+                                   
+                                    <li>
+                                        <a href="#"><span class="tt-badge">@bug.SubCat.Cat.CatName</span></a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <div class="col-1 ml-auto show-mobile">
+                                <div class="tt-value">2h</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tt-col-category">
+                        <span class="tt-color03 tt-badge">@bug.SubCat.SubCatName</span>
+                    </div>
+                </div>
+
+               
+
+            }
         </div>
-    </div>
+        </div>
+</main>
+@*@foreach (var bug in Model)
+    {
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@bug.Title</h5>
+                <p class="card-text">@bug.Description</p>
+                <a asp-controller="Bug" asp-action="Details" asp-route-id="@bug.BugId" class="btn btn-primary">View</a>
+            </div>
+        </div>
 
-}
-@if (User.IsInRole("Admin"))
-{
+    }
+    @if (User.IsInRole("Admin"))
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Account" asp-action="Index">
+                Manage Users
+            </a>
+        </li>
+    }
     <li class="nav-item">
-        <a class="nav-link" asp-controller="Account" asp-action="Index">
-            Manage Users
+        <a class="nav-link" asp-controller="MyBugs" asp-action="Index">
+            Manage MyBugs
         </a>
-    </li>
-}
-<li class="nav-item">
-    <a class="nav-link" asp-controller="MyBugs" asp-action="Index">
-        Manage MyBugs
-    </a>
-</li>
+    </li>*@

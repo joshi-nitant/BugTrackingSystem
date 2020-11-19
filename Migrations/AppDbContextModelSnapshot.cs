@@ -196,6 +196,9 @@ namespace BugTrackingSystem.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SubCatName")
                         .HasColumnType("nvarchar(max)");
 
@@ -355,7 +358,8 @@ namespace BugTrackingSystem.Migrations
                 {
                     b.HasOne("BugTrackingSystem.Models.ApplicationUser", "Owner")
                         .WithMany("UserBugs")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BugTrackingSystem.Models.SubCategory", "SubCat")
                         .WithMany("CategoryBugs")
@@ -379,7 +383,7 @@ namespace BugTrackingSystem.Migrations
                     b.HasOne("BugTrackingSystem.Models.Bug", "ParentBug")
                         .WithMany("BugComments")
                         .HasForeignKey("BugId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Owner");

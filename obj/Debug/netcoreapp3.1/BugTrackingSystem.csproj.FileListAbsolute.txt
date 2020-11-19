@@ -89,3 +89,6 @@ D:\Learning\.NetCore\BugTrackingSystem\obj\Debug\netcoreapp3.1\Razor\Views\Accou
 D:\Learning\.NetCore\BugTrackingSystem\obj\Debug\netcoreapp3.1\Razor\Views\MyBugs\Add.cshtml.g.cs
 D:\Learning\.NetCore\BugTrackingSystem\obj\Debug\netcoreapp3.1\Razor\Views\MyBugs\Index.cshtml.g.cs
 D:\Learning\.NetCore\BugTrackingSystem\obj\Debug\netcoreapp3.1\Razor\Views\MyBugs\EditBug.cshtml.g.cs
+D:\Learning\.NetCore\BugTrackingSystem\obj\Debug\netcoreapp3.1\Razor\Views\Filter\Index.cshtml.g.cs
+D:\Learning\.NetCore\BugTrackingSystem\obj\Debug\netcoreapp3.1\Razor\Views\Category\Index.cshtml.g.cs
+D:\Learning\.NetCore\BugTrackingSystem\obj\Debug\netcoreapp3.1\Razor\Views\Category\SubCategory.cshtml.g.cs

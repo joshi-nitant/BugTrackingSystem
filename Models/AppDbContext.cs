@@ -25,7 +25,28 @@ namespace BugTrackingSystem.Models
             //foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             //{
             //    relationship.DeleteBehavior = DeleteBehavior.Restrict;
+
             //}
+            modelBuilder.Entity<ApplicationUser>()
+                        .HasMany(i => i.UserBugs)
+                            .WithOne(i => i.Owner)
+                         .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ApplicationUser>()
+                       .HasMany(i => i.UserComments)
+                           .WithOne(i => i.Owner)
+                        .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Bug>()
+                      .HasMany(i => i.BugComments)
+                          .WithOne(i => i.ParentBug)
+                       .OnDelete(DeleteBehavior.Restrict);
+            
+            modelBuilder.Entity<Category>()
+                      .HasMany(i => i.SubCategories)
+                          .WithOne(i => i.Cat)
+                       .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Seed();
         }
     }

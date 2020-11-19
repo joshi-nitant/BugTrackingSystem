@@ -12,6 +12,6 @@ namespace BugTrackingSystem.ViewModels
         public Bug bug { get; set; }
         public Category category { get; set; }
         public SubCategory subCategory { get; set; }
-
+        public IEnumerable<Bug> bugs { get; set; }
     }
 }
