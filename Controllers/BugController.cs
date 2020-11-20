@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -63,10 +64,13 @@ namespace BugTrackingSystem.Controllers
             IEnumerable<BugComment> bugComments = bugs.ToList()[0].BugComments;
 
             List<BugComment> bugCommentsWithUser = new List<BugComment>();
-
+            int i = 0;
             foreach(var bugComment in bugComments)
             {
-                bugCommentsWithUser.Add(_bugCommentRepository.GetBugComment(bugComment.BugCommentId).ToList()[0]);
+                var formatedBug = _bugCommentRepository.GetBugComment(bugComment.BugCommentId).ToList()[0];
+                formatedBug.Comment = WebUtility.HtmlDecode(formatedBug.Comment);
+
+                bugCommentsWithUser.Add(formatedBug);
             }
             bugCommentsViewModel.bugComments = bugCommentsWithUser;
             return View(bugCommentsViewModel);
@@ -81,7 +85,7 @@ namespace BugTrackingSystem.Controllers
             BugComment bugComment = new BugComment
             {
                     BugId = bugCommentsViewModel.bug.BugId,
-                    Comment = bugCommentsViewModel.bugComment.Comment,
+                    Comment = WebUtility.HtmlEncode(bugCommentsViewModel.bugComment.Comment),
                     CommentDate = DateTime.Now,
                     ApplicationUserId = userid,
             };
@@ -109,7 +113,23 @@ namespace BugTrackingSystem.Controllers
                 string bugTitle = bug.Title.ToLower();
                 string bugDescription = bug.Description.ToLower();
 
-                if(bugTitle.Contains(search) || bugDescription.Contains(search))
+                if (search.Equals("solved"))
+                {
+                    if (bug.IsSolved)
+                    {
+                        searchedBugs.Add(bug);
+                    }
+
+                } else if (search.Equals("unsolved"))
+                {
+                    if (!bug.IsSolved)
+                    {
+                        searchedBugs.Add(bug);
+                    }
+
+                } else if (search.Equals("all")){
+                    searchedBugs.Add(bug);
+                } else if (bugTitle.Contains(search) || bugDescription.Contains(search))
                 {
                     searchedBugs.Add(bug);
                 }

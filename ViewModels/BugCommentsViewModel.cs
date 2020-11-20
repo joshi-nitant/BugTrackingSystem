@@ -11,5 +11,6 @@ namespace BugTrackingSystem.ViewModels
         public Bug bug { get; set; }
         public BugComment bugComment { get; set; }
         public List<BugComment> bugComments { get; set; }
+     
     }
 }

@@ -87,12 +87,13 @@ namespace BugTrackingSystem.Controllers
             {
 
                 subCategoryViewModel.subCategories  = SubCategoryRepository.GetAllSubCategoryOfCategory(id);
-                subCategoryViewModel.category = CategoryRepository.GetCategory(subCategoryViewModel.subCategories.ToList()[0].CategoryId);
+                subCategoryViewModel.category = CategoryRepository.GetCategory(id);
+               
             }
             return View(subCategoryViewModel);
         }
         [HttpPost]
-       
+  
         [Route("SubCategory/{id}")]
         public IActionResult SubCategory(SubCategoryViewModel subCategoryViewModel)
         {

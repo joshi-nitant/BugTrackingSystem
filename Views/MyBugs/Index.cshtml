@@ -180,7 +180,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="category.CatName">Category</label>
+                                <label for="category.CatName">Project</label>
                                 <select id="CatID" asp-for="category.CatID" asp-items="@(new SelectList(@ViewBag.ListOfCategory,"CatID", "CatName"))">
                                 </select>
                             </div>
@@ -208,7 +208,7 @@
             </div>
             <div class="tt-list-header tt-border-bottom">
                 <div class="tt-col-topic">Topic</div>
-                <div class="tt-col-category">Category</div>
+                <div class="tt-col-category">Project</div>
                 <div class="tt-col-value hide-mobile">Solved</div>
                 <div class="tt-col-value hide-mobile">Edit</div>
                 <div class="tt-col-value hide-mobile">Delete</div>
@@ -251,7 +251,7 @@
                 @if (currentBug.IsSolved)
                 {
                         
-                <span class="tt-color08 tt-badge">Yes</span>
+                <span class="tt-color15 tt-badge">Yes</span>
                 }
                 else
                 {

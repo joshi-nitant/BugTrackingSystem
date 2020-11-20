@@ -52,24 +52,24 @@
                         <nav>
                             <ul>
                                 <li>
-                                    <a asp-controller="Bug" asp-action="Index"><span>Home</span></a>
+                                    <a asp-action="Index" asp-controller="Bug" asp-route-id=""><span>Home</span></a>
                                 </li>
                                 <li>
-                                    <a asp-controller="MyBugs" asp-action="Index"><span>MyBugs</span></a>
+                                    <a  asp-action="Index" asp-controller="MyBugs" asp-route-id=""><span>MyBugs</span></a>
                                 </li>
 
 
                                 @if (User.IsInRole("Admin"))
                                 {
                                     <li>
-                                        <a asp-controller="Account" asp-action="Index"><span>Manage Employee</span></a>
+                                        <a  asp-action="Index" asp-controller="Account" asp-route-id=""><span>Employees</span></a>
                                     </li>
                                 }
 
                                 @if (User.IsInRole("Admin"))
                                 {
                                     <li>
-                                        <a asp-controller="Category" asp-action="Index"><span>Category</span></a>
+                                        <a asp-action="Index" asp-controller="Category" asp-route-id=""><span>Projects</span></a>
                                     </li>
                                 }
 

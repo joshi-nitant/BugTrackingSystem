@@ -39,7 +39,7 @@ namespace BugTrackingSystem.Controllers
             categories.Insert(0, new Category
             {
                 CatID = 0,
-                CatName = "Select Category",
+                CatName = "Select Project",
             });
             ViewBag.ListOfCategory = categories;
             myBugAddViewModel.bugs = bugs;
